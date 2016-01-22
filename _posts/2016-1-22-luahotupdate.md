@@ -5,12 +5,14 @@ published: true
 ---
 
 
-require 做了什么？
+### require 做了什么
 
-一个lua文件example.lua，内容如下
 
-    local i = 3
-    return i
+
+    function print_some()
+    	print("before")
+    end
+    return print_some
 
 那么require "example.lua"可以用下面的语句实现
 
