@@ -12,7 +12,7 @@ published: true
     end
     return print_some
 
-那么require "example.lua"可以用下面的语句实现
+那么`require "example.lua"`可以用下面的语句实现
 
     if package.loaded["example.lua"] == nil then
     
