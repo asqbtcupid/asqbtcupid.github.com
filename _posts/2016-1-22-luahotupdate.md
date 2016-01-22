@@ -7,8 +7,6 @@ published: true
 
 ### require 做了什么
 
-
-
     function print_some()
     	print("before")
     end
