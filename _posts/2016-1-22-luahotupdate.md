@@ -30,7 +30,7 @@ end
 
 return package.loaded["example.lua"]
 
-也就是当require过一次example以后，即使example的内容变了，但是package.loaded["example.lua"]已经不是nil，所以新的exmaple并不会被执行，如果想要require到新的example，那么只需要先package.loaded["example.lua"]，然后再require "exmaple"，就能执行到新的exmaple了
+根据这个语义，多次执行require "exmaple.lua"，也只有第一是真正的执行exmaple里的内容。这时如果在require之前把package.loaded["example.lua"] = nil，那么当再require "exmaple"，就会再执行一次exmaple的内容了，料你已经想到，这时候如果exmaple的内容变了，那不就是相当于热更新了吗。但是问题随之而来。
 
 
 
