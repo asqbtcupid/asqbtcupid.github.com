@@ -5,6 +5,7 @@ published: true
 ---
 
 
+在本章里，我教大家实现一种最简单，但也是问题最多的一种热更新，它是我后面文章的基础。
 
 ### require 做了什么？
 把下面的代码写到一个lua文件里，比如叫example.lua
@@ -38,9 +39,10 @@ published: true
 每次调用这两句，func都会是新的，这相当于实现了热更新，别高兴，这只适用于非常简单的情况。工程上没法这么用，别的不说，首先每次都会require都要调用package.loaded["example.lua"] = nil，这需要修改逻辑代码。我们想要的是一种非侵入的方式实现热更新
 
 其次因为example的内容会重新执行一次，会重新执行你不想要执行的代码，假如example是这么写的
+
 	global_var = 0
 	local function print_some()	
 		print("something")
 	end
 	return print_some
-那么每一次“热更新”都会把全局变量global_var置为0，到时候程序叮铛出错的时候你还不知道怎么回事~
+那么每一次“热更新”都会把全局变量global_var置为0。
