@@ -1,5 +1,5 @@
 ---
 layout: post
-title: "Lua Closure 热更新(1) - require机制"
+title: "Lua Closure 热更新(2) - Upvalue
 published: true
 ---
