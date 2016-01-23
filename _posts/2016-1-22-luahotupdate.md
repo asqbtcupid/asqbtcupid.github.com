@@ -45,4 +45,5 @@ published: true
 		print("something")
 	end
 	return print_some
-那么每一次“热更新”都会把全局变量global_var置为0。
+    
+那么每一次“热更新”都会把全局变量global_var置为0，这是你想要这样的结果吗？当然这种热更新还有一个严重的问题，就是upvalue被重置了，这在第二篇文章里讨论。
