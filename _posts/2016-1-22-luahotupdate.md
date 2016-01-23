@@ -40,7 +40,7 @@ published: true
 其次因为example的内容会重新执行一次，会重新执行你不想要执行的代码，假如example是这么写的
 	global_var = 0
 	local function print_some()	
-    	print("something")
+		print("something")
 	end
 	return print_some
 那么每一次“热更新”都会把全局变量global_var置为0，到时候程序叮铛出错的时候你还不知道怎么回事~
