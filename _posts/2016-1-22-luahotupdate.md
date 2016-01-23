@@ -17,7 +17,7 @@ published: true
 
 那么`require "example.lua"`可以用下面的语句实现
 
-    if package.loaded["example.lua"] == nil then	--package是默认就有的全局table
+    if package.loaded["example"] == nil then	--package是默认就有的全局table
         function f()
         	local function print_some()			  --注意只有这四行是
            		print("something") 				--example.lua的内容
@@ -25,9 +25,13 @@ published: true
            return print_some                   
         end
         local result = f()
-        package.loaded["example.lua"] = result or true
+        if result == nil then
+        	package.loaded["example"] = true
+        else
+        	package.loaded["example"] = result
+        end
     end
-    return package.loaded["example.lua"]
+    return package.loaded["example"]
     
 根据这个语义，多次执行require "exmaple.lua"，也只有第一次执行exmaple里的内容，执行之后的返回值会缓存到package.loaded里，再次require就不会执行example，而是直接返回package.loaded["example"]。
 
