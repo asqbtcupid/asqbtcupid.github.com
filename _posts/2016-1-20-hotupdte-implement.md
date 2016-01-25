@@ -46,4 +46,26 @@ published: true
 Init负责初始化，RootPath是你的lua文件目录，UpdateListFile是一个lua路径，要求这个lua文件长得跟hotupdatelist.lua一样返回一个table，这个table包含想要热更新的文件的文件名。FailNotify是热更新出错时的函数，需要该函数接受一个字符串参数，该字符串包含了出错的原因。
 
 Update每运行一次就对hotupdatelist里面的文件进行热更新。
+
+
 ###注意事项
+热更新只会更新函数的逻辑，而不更新“数据”，你可以改变里面函数的逻辑，比如test.lua
+
+    local test = {}
+    local times = 0
+    
+    local function upvalue_func()
+      print("upvalue func")
+    end
+    
+    function test.func()
+      times = times + 1
+      print("func", times)
+      upvalue_func()
+    end
+    
+    return test
+
+upvalue_func和test.func都可以尽情修改，例如修改print别的字符串，你能看到循环里执行到新的代码。
+
+
