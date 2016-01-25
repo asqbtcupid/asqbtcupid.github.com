@@ -35,3 +35,9 @@ published: true
         end
       end
     end
+ 
+主要起作用的是luahotupdate，它有两个接口：
+- Init(SrcPath, hotupdatelist [, notifyfunc])
+- Update()
+
+
