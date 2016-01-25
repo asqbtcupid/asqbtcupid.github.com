@@ -37,6 +37,7 @@ published: true
     end
  
 主要起作用的是luahotupdate，它有两个接口：
+
 - Init(RootPath, UpdateListFile [, FailNotify])
 - Update()
 
