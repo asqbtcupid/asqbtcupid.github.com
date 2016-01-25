@@ -36,6 +36,8 @@ published: true
         end
       end
     end
+
+main会每三秒调用一次test.func，共计调用10次，在此循环期间，依然修改test.func的内容，并且会生效。
     
 ###接口说明
 主要起作用的是luahotupdate，它有两个接口：
