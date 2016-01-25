@@ -1,10 +1,7 @@
 ---
 layout: post
 title: lua closure热更新配置
+published: true
 ---
 
-Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
-
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
+本篇是我的lua热更新机制的配置教程，这里的“热更新”指的是调试开发代码的热更新，而不是线上项目代码的热更新，简单来讲就是，它能让你在开着客户端的同时，使得修改后的lua代码立即生效，就是说省得去重启客户端看效果了。
