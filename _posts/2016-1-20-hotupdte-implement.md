@@ -12,6 +12,8 @@ published: true
 
 
 把这4个文件放到同一目录下，`main.lua`是入口
+
+	--main.lua
     local hotupdate = require "luahotupdate"
     local test = require "test"
     
