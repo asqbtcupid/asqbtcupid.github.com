@@ -34,7 +34,7 @@ published: true
     end
     return package.loaded["example"]
     
-根据这个语义，多次执行require "exmaple.lua"，也只有第一次执行exmaple里的内容，执行之后的返回值会缓存到package.loaded里，再次require就不会执行example，而是直接返回package.loaded["example"]。
+根据这个语义，多次执行`require "exmaple.lua"`，也只有第一次执行exmaple里的内容，执行之后的返回值会缓存到package.loaded里，再次require就不会执行example，而是直接返回package.loaded["example"]。
 
 如果你改写了example的内容，然后想require改写之后的example，那怎么办呢？只需要先执行package.loaded["example.lua"] = nil，那么再require "exmaple"时，就会得到新的example。如下面的代码
 	
