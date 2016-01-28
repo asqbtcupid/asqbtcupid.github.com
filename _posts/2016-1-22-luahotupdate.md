@@ -5,6 +5,7 @@ published: true
 ---
 
 
+
 在本章里，我教大家实现一种最简单，但也是问题最多的一种热更新，它是我后面文章的基础。
 
 ### require 做了什么？
@@ -18,7 +19,7 @@ published: true
 那么`require "example.lua"`可以用下面的语句实现
 
     if package.loaded["example"] == nil then	--package是默认就有的全局table
-        function f()
+        local function f()
         	local function print_some()			  --注意只有这四行是
            		print("something") 				--example.lua的内容
            end
