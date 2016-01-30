@@ -1,5 +1,6 @@
 ---
-title: Lua热加载
+layout: post
+title: "Lua热加载"
 published: true
 ---
 
