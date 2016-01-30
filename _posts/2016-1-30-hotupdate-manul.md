@@ -10,22 +10,65 @@ published: true
 ###约定1. 按文件为单位热更新
 我们通过hotupdatelist指定文件名，然后热更新机制会先找之前require这个文件时产生的函数，然后重新load这个文件产生一批新的函数，用这批新的函数来替代原来找到的旧的函数。通过一系列例子说明(文件中出现的函数都可以被更新)：
 
-1. 局部函数可以被更新
-
-		--example1.lua	
+1. 局部函数func可以被更新
+	
     	local function func()
     	end
-    	return exmaple	
+    	return func	
         
-2. 局部函数所引用的局部函数f可以被更新
-	--example2.lua
-    local function f()
-    end
-    local function func()
-    	f()
-    end
-    return exmaple
-3. item
+2. 表函数t.func可以被更新
+		
+        local t ＝ {}
+        function t.func()
+        end
+        return t
+        
+3. upvalue函数f可以被更新
+	
+    可以是局部函数的upvalue：
+
+    	local function f()
+    	end
+    	local function func()
+    		f()
+    	end
+    	return func
+        
+    也可以是表函数的upvalue：
+    
+    	local t ＝ {}
+        local function f()
+        end
+        function t.func()
+        end
+        return t
+    
+4. upvalue表里的函数可以被更新
+	
+        local up_t = {}
+        function up_t.f()
+        local function func()
+            up_t.f()
+        end
+        return func
+        
+5. 元表函数meta.f可以被更新
+		
+        local meta = {}
+        function meta.f()
+        end
+        local t = setmetatable({}, meta)
+        return t
+        
+6. 全局函数f，或者全局表里的函数g_t.f可以更新
+		
+        function f()
+        g_t = {}
+        function g_t.f()
+        end
+
+        
+       
 
 
 	
