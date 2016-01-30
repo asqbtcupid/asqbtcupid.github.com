@@ -1,12 +1,11 @@
 ---
-layout: post
-title: lua closure热更新配置
-published: true
+published: false
 ---
 
 
 本篇教你使用我的“热更新”，这里的热更新是指，lua虚拟机运行时，你去修改代码，新代码会替代老代码生效，这有两方面的好处。对线下开发项目来说，省去重启客户端看效果，能够提高开发的效率。对于线上项目来说，可以不停服更新。我们来看个例子吧：
 
+（动图加载可能有点慢，请耐心一点儿～）
 ![例子动图]({{site.baseurl}}/images/hotupdate-example.gif)
 
 通过上面的例子，你也许观察到了函数逻辑被热更新了，而数据没有被热更新，就是test.count，局部变量count，全局变量d_count还维持原来的值，这是涉及一个非常重要的原则：
@@ -54,6 +53,7 @@ main每三秒调用一次test.func()，可以修改test.func的代码，并且�
 - Update()
 
 Init负责初始化，各个参数说明：
+
 1. UpdateListFile
 是你的hotupdalist.lua的require路径，hotupdalist.lua只是返回一个table，这个table里记录着需要被热更新的文件名，在本例就是“test”，hotupdalist.lua也是可以在运行时修改，修改后不需要重启就生效。
 
@@ -65,6 +65,8 @@ Init负责初始化，各个参数说明：
 
 4. ENV
 需要传入环境表，lua5.1默认不传就是“_G”。
+
+Update()是执行一次热更新，它会找到hotupdatelist里面的文件，热更新它们的函数。当然并不是里面定义的所有函数都会被热更新，由下面的细则说明。
 
 ###热更新细则
 
