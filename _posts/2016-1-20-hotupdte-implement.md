@@ -27,8 +27,8 @@ published: true
 “不被察觉”指的是，我们写我们的逻辑代码，该怎么写就怎么写，想怎么写就怎么写，就像我们不知道有热更新这回事。但是不管代码写成什么样，都能被热更新，至少绝大部分都可以。我的热更新机制对于公司项目里那2000多个lua文件，％99.9都ok，不需要修改这修改那来迎合热更新。
 
 
-###代码
-代码在此：[lua_hotupdate](https://github.com/asqbtcupid/lua_hotupdate)
+###代码[lua_hotupdate](https://github.com/asqbtcupid/lua_hotupdate)
+
 有4个文件，`luahotupdate.lua`和`hotupdatelist.lua`是主要代码，`main.lua`和`test.lua`用来简单地测试说明这个东西怎么用。
 
 简单的做法是把这4个文件放到同一目录下，`main.lua`是入口
@@ -70,11 +70,9 @@ Init负责初始化，各个参数说明：
 是一个table，这个table的每个项都是一个目录地址，该目录下包括子目录下的lua文件都可以被热更新，只需要把文件名填进hotupdatelist里。
 
 3. FailNotify
-需要传入一个函数，该函数可以接收一个字符串作为输入，当热更新出错时会把出错信息告知这个函数，你问我什么时候会出错呢？有几种情况，比如hotupdalist.lua里包含了不存在的文件名，又如修改后的文件有了语法错误导致无法编译。可以为nil。
+需要传入一个函数，该函数可以接收一个字符串作为输入，当热更新出错时会把出错信息告知这个函数，你问我什么时候会出错呢？有几种情况，比如hotupdalist.lua里包含了不存在的文件名，又如修改后的文件有了语法错误导致无法编译。不传入函数也可以，出错你就收不到通知啦～
 
 4. ENV
 需要传入环境表，lua5.1默认不传就是“_G”。
 
-Update()是执行一次热更新，它会找到hotupdatelist里面的文件，热更新它们的函数。当然并不是里面定义的所有函数都会被热更新，由下面的细则说明。
-
-###热更新细则
+Update()是执行一次热更新，它会找到hotupdatelist里面的文件，热更新它们的函数。当然并不是里面定义的所有函数都会被热更新，由[热更新约定](http://asqbtcupid.github.io/hotupdate-manul/)说明。
