@@ -11,10 +11,12 @@ published: true
 我们通过hotupdatelist指定文件名，然后热更新机制会先找之前require这个文件时产生的函数，然后重新load这个文件产生一批新的函数，用这批新的函数来替代原来找到的旧的函数。通过一系列例子说明(文件中出现的函数都可以被更新)：
 
 1. 局部函数可以被更新
+
 		--example1.lua	
     	local function func()
     	end
     	return exmaple	
+        
 2. 局部函数所引用的局部函数f可以被更新
 	--example2.lua
     local function f()
