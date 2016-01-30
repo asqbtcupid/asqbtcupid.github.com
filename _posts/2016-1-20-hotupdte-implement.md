@@ -7,10 +7,11 @@ published: true
 
 
 
-的同时，使得修改后的lua代码立即生效，省得去重启客户端看效果，能够提高开发的效率。
+本篇教你使用我的“热更新”，这里的热更新指，lua虚拟机运行时，你去修改代码，新代码会替代老代码生效，这有两方面的好处。对线下开发项目来说，省去重启客户端看效果，能够提高开发的效率。对于线上项目来说，可以不停服更新。我们来看个例子吧：
+
+![例子动图]({{site.baseurl}}/images/hotupdate-example.gif)
 
 
-我们县
 
 ###代码
 代码在此：[lua_hotupdate](https://github.com/asqbtcupid/lua_hotupdate)
