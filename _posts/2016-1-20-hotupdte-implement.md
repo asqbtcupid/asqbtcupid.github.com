@@ -15,41 +15,34 @@ published: true
 
 可能你还注意到了另一个细节：被更新的test文件，并没有为支持热更新额外写了多余的代码。这是另一个重要的原则：
 ##热更新不被觉察
-我们实现一个热更新机制可以有很多办法，曾经有的朋友跟我讨论，说他们的模块为了支持数据不变的特性，需要在模块里额外写一些代码来记录旧值，热更新之后再把旧值copy过来，或者用一些特殊的语法来支撑。这些方式弊端太多？想象一下，你带着你的热更新机制来到了一个新的项目里，这个项目已经写了成百上千的模块，这时你难道要一一修改这些模块来支持热更新吗？再想象一下，同事为了支持你的热更新系统，必须遵循一些代码规则，这无形中加重了团队的负担。
+我们实现一个热更新机制可以有很多办法，曾经有的朋友跟我讨论，说他们的模块为了支持数据不变的特性，需要在模块里额外写一些代码来记录旧值，热更新之后再把旧值copy过来，或者用一些特殊的语法来支撑。这些方式有很多弊端。想象一下，你带着你的热更新机制来到了一个新的项目里，这个项目已经写了成百上千的模块，这时你难道要一一修改这些模块来支持热更新吗？再想象一下，同事为了支持你的热更新系统，必须遵循一些代码规则，这无形中加重了他们的负担。
 
 “不被察觉”指的是，我们写我们的逻辑代码，该怎么写就怎么写，想怎么写就怎么写，就像我们不知道有热更新这回事。但是不管代码写成什么样，都能被热更新。我的热更新机制可以随意用到什么项目上，对于％99.9的模块来说，都能够实现热更新，不需要你修改这修改那来迎合热更新。
-
-
-
 
 ###代码
 代码在此：[lua_hotupdate](https://github.com/asqbtcupid/lua_hotupdate)
 有4个文件，`luahotupdate.lua`和`hotupdatelist`是主要代码，`main.lua`和`test.lua`用来简单地测试说明这个东西怎么用。
 
+简单的做法是把这4个文件放到同一目录下，`main.lua`是入口
 
-把这4个文件放到同一目录下，`main.lua`是入口
-
-	--main.lua
-    local hotupdate = require "luahotupdate"
-    local test = require "test"
+    local HU = require "luahotupdate"
+    HU.Init("hotupdatelist", {"D:\\ldt\\workspace\\hotimplement\\src"}) --please 	 replace the second parameter with you src path
     
-    hotupdate.Init({"D:\\ldt\\workspace\\hotimplement\\src"}, "hotupdatelist")
-    local run_times = 0
-    local last_time = os.clock()
-    
-    while true do
+    function sleep(t)
       local now_time = os.clock()
-      if now_time - last_time > 3 then
-        last_time = now_time
-        run_times = run_times + 1
-        
-        hotupdate.Update()
-        test.func()
-        
-        if run_times >= 10 then
-          break
+      while true do
+        if os.clock() - now_time > t then
+          HU.Update() 
+          return 
         end
       end
+    end
+   
+   	local test = require "test"
+    print("start runing")
+    while true do
+      test.func()
+      sleep(3)
     end
 
 main会每三秒调用一次test.func，共计调用10次，在此循环期间，可以修改test.func的内容，并且会生效。
