@@ -74,6 +74,6 @@ Update每运行一次就对hotupdatelist里面的文件进行热更新。
     return test
     
 upvalue_func和test.func都可以尽情修改，例如修改print别的字符串，你能看到循环里执行到新的代码。下图是个例子。
-![例子动图]({{site.baseurl}}/images/hotupdate-example.gif)
+[例子动图]({{site.baseurl}}/images/hotupdate-example.gif)
 
 它虽然目前也还有些问题，但已经运用都公司的项目里了。如果大家感兴趣，我会再发几篇文章说明它的原理。
