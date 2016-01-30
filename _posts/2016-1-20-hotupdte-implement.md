@@ -17,11 +17,11 @@ published: true
 ##热更新不被觉察
 我们实现一个热更新机制可以有很多办法，曾经有的朋友跟我讨论，说他们的模块为了支持数据不变的特性，需要在模块里额外写一些代码来记录旧值，热更新之后再把旧值copy过来，或者用一些特殊的语法来支撑。这些方式有很多弊端。想象一下，你带着你的热更新机制来到了一个新的项目里，这个项目已经写了成百上千的模块，这时你难道要一一修改这些模块来支持热更新吗？再想象一下，同事为了支持你的热更新系统，必须遵循一些代码规则，这无形中加重了他们的负担。
 
-“不被察觉”指的是，我们写我们的逻辑代码，该怎么写就怎么写，想怎么写就怎么写，就像我们不知道有热更新这回事。但是不管代码写成什么样，都能被热更新。我的热更新机制可以随意用到什么项目上，对于％99.9的模块来说，都能够实现热更新，不需要你修改这修改那来迎合热更新。
+“不被察觉”指的是，我们写我们的逻辑代码，该怎么写就怎么写，想怎么写就怎么写，就像我们不知道有热更新这回事。但是不管代码写成什么样，都能被热更新。我的热更新机制可以随意用到什么项目上，对于％99的模块来说，都能够实现热更新，至少我所在的项目里那2000多个lua文件都ok，不需要修改这修改那来迎合热更新。
 
 ###代码
 代码在此：[lua_hotupdate](https://github.com/asqbtcupid/lua_hotupdate)
-有4个文件，`luahotupdate.lua`和`hotupdatelist`是主要代码，`main.lua`和`test.lua`用来简单地测试说明这个东西怎么用。
+有4个文件，`luahotupdate.lua`和`hotupdatelist.lua`是主要代码，`main.lua`和`test.lua`用来简单地测试说明这个东西怎么用。
 
 简单的做法是把这4个文件放到同一目录下，`main.lua`是入口
 
@@ -45,40 +45,26 @@ published: true
       sleep(3)
     end
 
-main会每三秒调用一次test.func，共计调用10次，在此循环期间，可以修改test.func的内容，并且会生效。
+main每三秒调用一次test.func()，可以修改test.func的代码，并且会生效。
     
 ###接口说明
-主要起作用的是luahotupdate，它有两个接口：
+主要起作用的是luahotupdate.lua，它有两个接口：
 
-- Init(RootPath, UpdateListFile [, FailNotify])
+- Init(UpdateListFile, RootPath, [, FailNotify, ENV])
 - Update()
 
-Init负责初始化，RootPath是你的lua文件目录，在本例里是D:\\ldt\\workspace\\hotimplement\\src，也就是放我这4个代码的地方。UpdateListFile是一个lua路径，要求这个lua文件返回一个table，这个table包含想要热更新的文件的文件名。FailNotify是热更新出错时的函数，需要该函数接受一个字符串参数，该字符串包含了出错的原因。
+Init负责初始化，各个参数说明：
+1. UpdateListFile
+是你的hotupdalist.lua的require路径，hotupdalist.lua只是返回一个table，这个table里记录着需要被热更新的文件名，在本例就是“test”，hotupdalist.lua也是可以在运行时修改，修改后不需要重启就生效。
 
-Update每运行一次就对hotupdatelist里面的文件进行热更新。
+2. RootPath
+是一个table，这个table的每个项都是一个目录地址，该目录下包括子目录下的lua文件都可以被热更新，只需要把文件名填进hotupdatelist里。
 
+3. FailNotify
+需要传入一个函数，该函数可以接收一个字符串作为输入，当热更新出错时会把出错信息告知这个函数，你问我什么时候会出错呢？有几种情况，比如hotupdalist.lua里包含了不存在的文件名，又如修改后的文件有了语法错误导致无法编译。可以为nil。
 
-###注意事项
-热更新只会更新函数的逻辑，而不更新“数据”，你可以改变里面函数的逻辑，比如test.lua
+4. ENV
+需要传入环境表，lua5.1默认不传就是“_G”。
 
-    local test = {}
-    local times = 0
-    
-    local function upvalue_func()
-      print("upvalue func")
-    end
-    
-    function test.func()
-      times = times + 1
-      print("func", times)
-      upvalue_func()
-    end
-    
-    return test
-    
-upvalue_func和test.func都可以尽情修改，例如修改print别的字符串，你能看到循环里执行到新的代码。下图是个例子。
+###热更新细则
 
-
-![例子动图]({{site.baseurl}}/images/hotupdate-example.gif)
-
-它虽然目前也还有些问题，但已经运用都公司的项目里了。如果大家感兴趣，我会再发几篇文章说明它的原理。
