@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lua Closure 热更新(2) - Upvalue"
+title: "Lua热更新原理(2) - Upvalue"
 published: true
 ---
 ##对table的误解
@@ -30,12 +30,13 @@ published: true
 	t.func = require "t_func"
 	return t
 
-当你调用`t.func()`，还会得到想要的结果吗？不会，你会得到一个报错`attempt to index global 't' (a nil value)`，这时候的`t.func`压根不知道`t`的存在，更别说't.data'了。
+当你调用`t.func()`，还会得到想要的结果吗？不会，你会得到一个报错`attempt to index global 't' (a nil value)`，这时候的`t.func`压根不知道`t`的存在，更别说`t.data`了。
 
 table对于该table里的值并不一定可见，upvalue是维系它们的桥梁。
 
 ##什么是upvalue？
 我想用一句话来总结：**函数里用到的定义在该函数之前的local变量，就成为了该函数的upvalue**。在此我还要说一个关于local变量误区，也是因为把它类比成了其它语言的局部变量造成的，就是误解了它的生命周期。在lua里，对于local变量，只要你还能访问到，不管是通过upvalue还是通过table，那么这个local变量就不消失，它的值也不会变化除非你主动改变它。对于这个文件：
+
 	--example.lua
 	local t = {}
 	t.data = 6
