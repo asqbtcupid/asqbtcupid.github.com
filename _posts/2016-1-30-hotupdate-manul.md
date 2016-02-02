@@ -5,6 +5,7 @@ published: true
 ---
 
 
+
 本篇说明一下我的热更新的一些特性和约定。上篇在[lua热更新配置](http://asqbtcupid.github.io/hotupdte-implement/)里我们已经说到了一个重要的原则，就是只更新函数的逻辑，而不更新数据。现在我们抛开具体实现思考一下，为了让lua虚拟机把某个旧的函数替换成新的函数，我们需要提供什么？我们至少需要提供两个信息，首先旧函数是哪个，其次新函数又是哪个？那么有了约定1。
 
 ###约定1. 按文件为单位热更新
@@ -89,7 +90,7 @@ published: true
     local t = require "somefile"
     t.somef()
 
-   在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真的`t.somef()`，以后再说，你就当它没执行好了
+   在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真	的`t.somef()`，以后再说，你就当它没执行好了
 
 2. 全局语句不要有全局变量与数字的比较，例如：  
 
@@ -100,7 +101,7 @@ published: true
 
     if global_func() == true then .... end
 
-   因为真的global_func()不会被执行，所以这判断的结果不会如你所想。然后这导致一个问题，比如这种写法
+   因为真的global_func()不会被执行，所以这判断的结果不会如你所想。然后这导致一个问题，比如这种写	法:
 
     if global_func() == true then 
         somefun = function()
@@ -112,11 +113,4 @@ published: true
         end
     end
 
-`somefun`不一定是其中的哪一个，所以就算是热更新成功，结果也会出人意料。
-
-
-
-
-
- 
-
+`	somefun`不一定是其中的哪一个，所以就算是热更新成功，结果也会出人意料。
