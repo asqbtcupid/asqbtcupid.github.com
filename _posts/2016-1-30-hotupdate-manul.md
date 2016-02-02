@@ -89,13 +89,13 @@ published: true
         local t = require "somefile"
         t.somef()
 
-    在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真的`t.somef()`，以后再说，你就当它没执行好了
+在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真的`t.somef()`，以后再说，你就当它没执行好了
 
 2. 全局语句不要有全局变量与数字的比较，例如：
         
         if global_a > 3 then ..... end
 
-    这会导致热更失败，我的热更仅仅不支持这种语法
+这会导致热更失败，我的热更仅仅不支持这种语法
 
 
 3. item
