@@ -48,7 +48,7 @@ table对于该table里的值并不一定可见，upvalue是维系它们的桥梁
 `t.func`能访问到`t.data`，是因为`t`成为了`t.func`的upvalue。
 
 ##热更新需要注意的
-把旧函数换成新函数，也要记得把旧函数的upvalue复制新函数身上。例如:
+upvalue是持久的数据，为了不破坏原来的逻辑，把旧函数换成新函数时，也要记得把旧函数的upvalue复制新函数身上。例如:
 
 	--example.lua
 	local count = 0
