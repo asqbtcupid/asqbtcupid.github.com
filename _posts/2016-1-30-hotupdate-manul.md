@@ -85,10 +85,11 @@ published: true
 
 ###约定3. 全局语句执行产生未定义结果
 为了避免重新加载文件时全局语句执行影响到原来的逻辑，我所采用的机制将带来一些负面影响，这些负面影响不容易描述清楚，我以后会专门写一篇文章来讨论，现在先简单声明：
+
 1. 不会执行真正全局语句，例如：
 
-	local t = require "somefile"
-	t.somef()
+		local t = require "somefile"
+		t.somef()
     
 在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真	的`t.somef()`，以后再说，你就当它没执行好了
    
