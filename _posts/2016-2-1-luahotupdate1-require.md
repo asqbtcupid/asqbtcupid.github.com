@@ -9,7 +9,7 @@ published: true
 在本篇里，我教大家实现一种最简单，但也是问题最多的一种热更新，它是我后面文章的基础。
 
 ### require 做了什么？
-把下面的代码写到一个lua文件里，比如叫example.lua
+把下面的代码写到一个lua文件里，比如叫`example.lua`
 
     local function print_some()
     	print("something")
@@ -34,7 +34,7 @@ published: true
     end
     return package.loaded["example"]
     
-根据这个语义，多次执行`require "exmaple.lua"`，也只有第一次执行exmaple里的内容，执行之后的返回值会缓存到package.loaded里，再次require就不会执行`example.lua`，而是直接返回package.loaded["example"]。
+根据这个语义，多次执行`require "exmaple.lua"`，也只有第一次执行exmaple里的内容，执行之后的返回值会缓存到package.loaded里，再次require就不会执行`example.lua`，而是直接返回`package.loaded["example"]`。
 
 如果你改写了example的内容，然后想require改写之后的example，那怎么办呢？只需要先执行`package.loaded["example.lua"] = nil`，那么再`require "exmaple"`时，就会得到新的example。如下面的代码
 	
