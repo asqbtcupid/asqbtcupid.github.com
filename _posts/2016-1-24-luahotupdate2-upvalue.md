@@ -3,9 +3,11 @@ layout: post
 title: "Lua热更新原理(2) - Upvalue"
 published: true
 ---
+
 ##对table的误解
 
 对于lua新手来说，可能会把table当成了c++里的class或者struct，就像当初的我，例如：
+
 	--example.lua
 	local t = {}
 	t.data = 6
@@ -71,6 +73,3 @@ upvalue是持久的数据，为了不破坏原来的逻辑，把旧函数换成�
 	end
 
 通过这种方法，就能把旧函数的upvalue复制到新函数里。
-
-
-
