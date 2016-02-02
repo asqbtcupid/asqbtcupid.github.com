@@ -6,6 +6,7 @@ published: true
 
 
 
+
 在本篇里，我教大家实现一种最简单，但也是问题最多的一种热更新，它是我后面文章的基础。
 
 ### require 做了什么？
@@ -41,7 +42,7 @@ published: true
 	package.loaded["example"] = nil
 	local func = require "example"
    
-每次调用这两句，func都会是新的，这相当于实现了热更新，别高兴，这只适用于非常简单的情况。工程上没法这么用，别的不说，首先每次都会require都要调用`package.loaded["example"] = nil`，这需要修改逻辑代码。其次因为example的内容会重新执行一次，会重新执行你不想要执行的代码，假如`example.lua`是这么写的
+每次调用这两句，func都会是新的，这相当于实现了热更新，别高兴，这只适用于非常简单的情况。工程上没法这么用，别的不说，首先每次require都要先调用`package.loaded["example"] = nil`，这需要修改逻辑代码。其次因为example的内容会重新执行一次，会重新执行你不想要执行的代码，假如`example.lua`是这么写的
 
 	global_var = 0
 	local function print_some()	
