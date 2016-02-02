@@ -24,10 +24,10 @@ published: true
 
    和
 
-		--t.lua
-		local t = {}
-		t.data = 6
-		t.func = require "t_func"
-		return t
+	--t.lua
+	local t = {}
+	t.data = 6
+	t.func = require "t_func"
+	return t
 
 当你调用`t.func()`，还会得到想要的结果吗？不会，你会得到一个"error"
