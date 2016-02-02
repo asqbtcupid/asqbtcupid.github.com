@@ -98,5 +98,13 @@ published: true
     
 3. 通过1和2，不应该再信任全局语句的执行结果，例如:因为真的global_func()不会被执行，所以这判断的结果不会如你所想。然后这导致一个问题，比如这种写法\:
 
-    
-`	somefun`不一定是其中的哪一个，所以就算是热更新成功，结果也会出人意料。
+        if global_func() == true then 
+            somefun = function()
+                print("1")
+            end
+        else
+            somefun = function()
+                print("2")
+            end
+        end
+   `somefun`不一定是其中的哪一个，所以就算是热更新成功，结果也会出人意料。
