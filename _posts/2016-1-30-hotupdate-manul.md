@@ -89,16 +89,30 @@ published: true
         local t = require "somefile"
         t.somef()
 
-在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真的`t.somef()`，以后再说，你就当它没执行好了
-
+   在这个例子中，不会真的`require`到`somefile`，也不会执行真的`t.somef()`，你也许想问什么叫做真的`t.somef()`，以后再说，你就当它没执行好了
 2. 全局语句不要有全局变量与数字的比较，例如：
         
         if global_a > 3 then ..... end
 
 这会导致热更失败，我的热更仅仅不支持这种语法
 
+3. 通过1和2，不应该再信任全局语句的执行结果，例如
 
-3. item
+        if global_func() == true then .... end
+
+因为真的global_func()不会被执行，所以这判断的结果不会如你所想。然后这导致一个问题，比如这种写法
+
+        if global_func() == true then 
+            somefun = function()
+                print("1")
+            end
+        else
+            somefun = function()
+                print("2")
+            end
+        end
+
+`somefun`不一定是其中的哪一个，所以就算是热更新成功，结果也会出人意料。
 
 全局函数的执行
 
