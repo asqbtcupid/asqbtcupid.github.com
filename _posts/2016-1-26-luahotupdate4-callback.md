@@ -47,3 +47,5 @@ published: true
 			end
 		end
 	end
+
+##至此关于lua热更新原理就介绍完毕了
