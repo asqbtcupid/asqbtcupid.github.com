@@ -87,4 +87,4 @@ published: true
 数据的存储与处理逻辑分离，不同模块都可以侦听同一数据的变化。
 ###坏处
 不能像原生table那么用了，不能在处理逻辑里改变数据，一个不小心会造成循环嵌套，stack overflow。
-
+###[代码](https://github.com/asqbtcupid/lua_triggertable)
