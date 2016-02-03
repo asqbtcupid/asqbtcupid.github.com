@@ -35,7 +35,7 @@ published: true
 	end
 	return func
 
-在[lua热更新原理(2) - upvalue](http://asqbtcupid.github.io/luahotupdate2-upvalue/)有说，我们需要把旧函数的upvalue复制到新函数里，在lua5.1里，只能改变upvalue的值，而不能新添upvalue。对于上面这个例子，语法分析时，不能把`local i = get_a_number()`整句去掉。因为去掉之后，`func`里就没有了这个upvalue，也就没办法把旧函数的upvalue复制过来。
+在[lua热更新原理(2) - upvalue](http://asqbtcupid.github.io/luahotupdate2-upvalue/)有说，我们需要把旧函数的upvalue复制到新函数里，在lua5.1里，只能改变upvalue的值，而不能新添upvalue。对于上面这个例子，语法分析时，不能把`local i = get_a_number()`整句去掉。因为去掉之后，`func`里就没有了`i`这个upvalue，也就没办法把旧函数的`i`复制过来。
 
 在这里，我们可以把`local i = get_a_number()`变成`local i = {}`或者别的什么，保留住这个`i`就行。
 
@@ -151,6 +151,26 @@ published: true
 	  io.input():close()
 	  print(chunk)
 	end
+
+##第二种：用假的环境表
+
+这是现在的版本在用的，思路跟语法分析截然相反，不改造源文件，全局语句让它执行，但是执行之后没有效果就好。首先请温习一下[元表的用法](http://www.lua.org/manual/5.1/manual.html#2.8)。
+
+###环境表
+lua里的每个函数都绑定了一个表，叫做环境表。在一个函数里索引一个变量，首先从局部变量找，其次从upvalue找，最后会去环境表里找。
+
+默认情况下全局变量都放在`_G`这个表中，例如下面的代码：
+
+	i = 6
+	local function f()
+		print(i)
+		_G["print"](_G["i"])
+	end
+
+`print(i)`与`_G[print](_G["i"])`是一样的，我们通过改变环境表来做手脚。
+
+我们先把文件源代码读进字符串，通过`loadstring`源代码字符串可以得到一个函数，执行该函数就能得到代码最后的那个`return`的东西（如果有`return`）。但是在执行之前，我们用`setfenv`来改变这个函数的环境表。那改成什么呢？
+###假环境表
 
 
 
