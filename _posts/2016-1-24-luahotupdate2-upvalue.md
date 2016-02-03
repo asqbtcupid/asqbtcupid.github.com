@@ -72,4 +72,4 @@ upvalue是持久的数据，为了不破坏原来的逻辑，把旧函数换成�
 		debug.setupvalue(newfunc, i, value)
 	end
 
-通过这种方法，就能把旧函数的upvalue复制到新函数里。
+通过这种方法，就能把旧函数的upvalue复制到新函数里。但如果想热更upvalue函数，那你就要注意区分，如果是函数，那就用新的upvalue。
