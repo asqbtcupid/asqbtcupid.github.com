@@ -58,7 +58,7 @@ published: true
       sleep(3)
     end
 
-main每三秒调用一次`test.func()`，可以修改`test.func`的代码，并且会生效。
+main每三秒调用一次`test.func()`，在运行期间可以修改`test.func`的代码，并且会生效。
     
 ###接口说明
 主要起作用的是`luahotupdate.lua`，它有两个接口：
