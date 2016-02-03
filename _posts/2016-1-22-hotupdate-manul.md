@@ -48,6 +48,7 @@ published: true
 	
         local up_t = {}
         function up_t.f()
+        end
         local function func()
             up_t.f()
         end
@@ -76,7 +77,13 @@ published: true
         end
         return t
 
-8. 以上规则可以自由组合，我不一一列举了
+8. `require`别的模块的函数`t.f`可以被更新
+        
+        local t = require "xxxx"
+        function t.f()
+        end
+
+9. 以上规则可以自由组合，我不一一列举了
 
 ###约定2. 新增和删除函数的约定
 
