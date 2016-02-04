@@ -37,7 +37,7 @@ footer-links:
 disqus: asqbtcupid
 
 # Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics:
+google_analytics:UA-73319347-1
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
@@ -53,7 +53,7 @@ baseurl: "http://asqbtcupid.github.io"
 # !! You don't need to change any of the configuration flags below !!
 #
 
-markdown: redcarpet
+markdown:
 highlighter: pygments
 permalink: /:title/
 
