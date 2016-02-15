@@ -4,6 +4,7 @@ title: "Lua热更新原理(2) - Upvalue"
 published: true
 ---
 
+
 ##对table的误解
 
 对于lua新手来说，可能会把table当成了c++里的class或者struct，就像当初的我，例如：
@@ -22,14 +23,9 @@ published: true
 	local function func()
 		print(t.data)
 	end
-	return func
-
-   和
-
-	--t.lua
-	local t = {}
+    local t = {}
 	t.data = 6
-	t.func = require "t_func"
+	t.func = func
 	return t
 
 当你调用`t.func()`，还会得到想要的结果吗？不会，你会得到一个报错`attempt to index global 't' (a nil value)`，这时候的`t.func`压根不知道`t`的存在，更别说`t.data`了。
