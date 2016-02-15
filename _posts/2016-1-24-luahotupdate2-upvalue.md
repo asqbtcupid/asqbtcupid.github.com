@@ -19,7 +19,7 @@ published: true
 
 可能你会觉得`t.func`能访问`t.data`是因为它们都是`t`里的值，当你把`t`认为是一个class，自然会认为`t.func`具有访问“数据成员”`t.data`的权限。你是不是觉得无论何时何地，table里的函数应该总能访问到该table里的其它“成员”？那如果有两个文件是这么写的：
 
-	--t_func.lua
+	--example.lua
 	local function func()
 		print(t.data)
 	end
