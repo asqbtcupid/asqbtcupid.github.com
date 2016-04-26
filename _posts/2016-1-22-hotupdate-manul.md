@@ -116,4 +116,4 @@ published: true
         end
    因为真的global_func()不会被执行，所以这判断的结果不会如你所想。`somefun`不一定是其中的哪一个，所以就算是热更新成功，结果也会出人意料。
 
-这些副作用都是因为阻止执行真正的全局语句，得到的好处就是热更新不破坏逻辑。总之当全局语句涉及到全局变量时，需要你小心一点。更多的关于全局语句的讨论在[lua热更新原理(3)](http://asqbtcupid.github.io/luahotupdate3-global/)，建议阅读之前先看看[lua热更新原理(1)](http://asqbtcupid.github.io/luahotupdate1-require/)和[lua热更新原理(2)](http://asqbtcupid.github.io/luahotupdate1-upvalue/)。
+这些副作用都是因为阻止执行真正的全局语句，得到的好处就是热更新不破坏逻辑。总之当全局语句涉及到全局变量时，需要你小心一点。更多的关于全局语句的讨论在[lua热更新原理(3)](http://asqbtcupid.github.io/luahotupdate3-global/)，建议阅读之前先看看[lua热更新原理(1)](http://asqbtcupid.github.io/luahotupdate1-require/)和[lua热更新原理(2)](http://asqbtcupid.github.io/luahotupdate2-upvalue/)。
