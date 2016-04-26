@@ -72,7 +72,7 @@ main每三秒调用一次`test.func()`，在运行期间可以修改`test.func`�
 是你的`hotupdalist.lua`的require路径，`hotupdalist.lua`只是返回一个table，这个table里记录着需要被热更新的文件名，在本例就是“test”，`hotupdalist.lua`也是可以在运行时修改，修改后不需要重启就生效。
 
 2. RootPath
-是一个table，这个table的每个项都是一个目录地址，该目录下包括子目录下的lua文件都可以被热更新，只需要把文件名填进`hotupdatelist`里。
+是一个table，这个table的每个项都是一个目录地址，该目录下包括子目录下的lua文件都可以被热更新，只需要把文件名填进`hotupdatelist`里，这些目录地址一定要是require的根目录地址，比如有D:\files\ui\lala.lua，在你的lua环境里通过require ui.lala得到lala.lua，那么这个目录地址是D:\\files，如果填的是D:\\files\\ui那么就不行了。抱歉目前只能用在windows开发环境，如果想要用在linux，那么要改写`luahotupdate.lua`里的`HU.InitFileMap`函数。
 
 3. FailNotify
 需要传入一个函数，该函数可以接收一个字符串作为输入，当热更新出错时会把出错信息告知这个函数，你问我什么时候会出错呢？有几种情况，比如`hotupdalist.lua`里包含了不存在的文件名，又如修改后的文件有了语法错误导致无法编译。不传入函数也可以，出错你就收不到通知啦～
